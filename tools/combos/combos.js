@@ -8,6 +8,8 @@
   const computeBtn = document.getElementById('computeBtn');
   const combosEl = document.getElementById('combos');
   const statusEl = document.getElementById('status');
+  const comboOutputEl = document.getElementById('comboOutput');
+  const copyComboOutputBtn = document.getElementById('copyComboOutputBtn');
 
   /** @type {{ index: number, cents: number, text: string }[]} */
   let entries = [];
@@ -43,6 +45,12 @@
     statusEl.textContent = combos.length
       ? `Found ${combos.length} combination(s)${truncated ? ' (truncated)' : ''}. Hover a combo to highlight.`
       : 'No combinations found.';
+  });
+
+  copyComboOutputBtn.addEventListener('click', () => {
+    const v = comboOutputEl.value;
+    if (!v) { statusEl.textContent = 'Select a combination first.'; return; }
+    navigator.clipboard.writeText(v).then(() => { statusEl.textContent = 'Copied selected combination.'; });
   });
 
   function parseLinesToEntries(text) {
@@ -82,6 +90,14 @@
     const remainder = abs % 100;
     const remStr = remainder.toString().padStart(2, '0');
     return `${sign}$${dollars.toLocaleString()}${remainder !== 0 ? '.' + remStr : '.00'}`;
+  }
+
+  function formatPlainDollars(cents) {
+    const neg = cents < 0 ? '-' : '';
+    const abs = Math.abs(cents);
+    const dollars = Math.floor(abs / 100);
+    const rem = (abs % 100).toString().padStart(2, '0');
+    return `${neg}${dollars}.${rem}`;
   }
 
   function renderEntries(items) {
@@ -143,6 +159,7 @@
       item.appendChild(chips);
       item.addEventListener('mouseenter', () => highlightCombo(combo, i, true));
       item.addEventListener('mouseleave', () => highlightCombo(combo, i, false));
+      item.addEventListener('click', () => displayComboOutput(combo));
       combosEl.appendChild(item);
     });
   }
@@ -160,6 +177,17 @@
         row.style.border = '';
       }
     });
+  }
+
+  function displayComboOutput(combo) {
+    const items = combo.items.slice().sort((a, b) => a.index - b.index);
+    const lines = ['index\tamount'];
+    for (const e of items) {
+      lines.push(`${e.index}\t${formatPlainDollars(e.cents)}`);
+    }
+    lines.push(`sum\t${formatPlainDollars(combo.sum)}`);
+    comboOutputEl.value = lines.join('\n');
+    comboOutputEl.scrollTop = 0;
   }
 
   function findCombinations(sourceEntries, targetCents, maxCount) {

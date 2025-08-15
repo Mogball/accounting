@@ -64,6 +64,14 @@
         <div class="panel-header"><h2>Combinations</h2></div>
         <div id="combos" class="combo-list"></div>
         <div id="status" class="hint" style="margin-top: 8px;"></div>
+        <div class="option-group" style="margin-top: 10px;">
+          <label>Selected combination (copy to Excel)</label>
+          <div class="buttons" style="margin-bottom: 6px;">
+            <button id="copyComboOutputBtn" type="button">Copy</button>
+          </div>
+          <textarea id="comboOutput" rows="6" readonly placeholder="Click a combination above to populate this box."></textarea>
+          <div class="hint">Format: index<TAB>amount. Amounts are numeric (e.g., -123.45) for easy pasting into Excel.</div>
+        </div>
       </section>
     </main>
 
