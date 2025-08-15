@@ -3,75 +3,37 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Accounting Paste Tools</title>
+    <title>Accounting Tools</title>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+      .tool-card { display: grid; gap: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.0)); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-decoration: none; color: inherit; }
+      .tool-card h3 { margin: 0; font-size: 16px; }
+      .tool-card p { margin: 0; color: var(--muted); }
+      .tool-card:hover { border-color: #33518b; }
+    </style>
   </head>
   <body>
     <header class="header">
-      <h1>Accounting Paste Tools</h1>
-      <p>Paste cells from Excel or Google Sheets. Convert to JSON or CSV.</p>
+      <h1>Accounting Tools</h1>
+      <p>A collection of small utilities for working with spreadsheet data.</p>
     </header>
 
     <main class="container">
       <section class="panel">
-        <div class="panel-header">
-          <h2>Input</h2>
-          <div class="actions">
-            <button id="clearBtn" type="button">Clear</button>
-          </div>
+        <div class="panel-header"><h2>Tools</h2></div>
+        <div class="tool-grid">
+          <a class="tool-card" href="tools/combos/index.html">
+            <h3>Sum Combinations (Subset of entries)</h3>
+            <p>Paste a column of dollar amounts, set a target, find all combinations that sum to the target. Uses integer cents and interactive highlighting.</p>
+          </a>
         </div>
-        <textarea id="input" placeholder="Paste here (Ctrl+V / Cmd+V)" rows="10"></textarea>
-        <div class="hint">Tip: Select cells in Excel, copy, then paste here. We parse pasted tab-delimited data.</div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Options</h2>
-        </div>
-        <div class="options">
-          <div class="option-group">
-            <label>Output format</label>
-            <div class="row">
-              <label><input type="radio" name="format" value="json-array" checked /> JSON (array of arrays)</label>
-              <label><input type="radio" name="format" value="json-objects" /> JSON (array of objects, first row = headers)</label>
-              <label><input type="radio" name="format" value="csv" /> CSV</label>
-            </div>
-          </div>
-          <div class="option-group" id="csvOptions" hidden>
-            <label>CSV options</label>
-            <div class="row">
-              <label>Delimiter <input id="csvDelimiter" type="text" value="," size="1" /></label>
-              <label><input id="csvHeaders" type="checkbox" /> Include header row</label>
-            </div>
-          </div>
-        </div>
-        <div class="buttons">
-          <button id="convertBtn" type="button">Convert</button>
-          <button id="copyBtn" type="button">Copy Output</button>
-          <button id="downloadBtn" type="button">Download</button>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Preview</h2>
-        </div>
-        <div id="preview" class="preview"></div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Output</h2>
-        </div>
-        <textarea id="output" rows="10" readonly></textarea>
       </section>
     </main>
 
     <footer class="footer">
-      <span id="status" aria-live="polite"></span>
+      <span>Hosted on GitHub Pages.</span>
     </footer>
-
-    <script src="app.js"></script>
   </body>
   </html>
 

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sum Combinations • Accounting Tools</title>
+    <link rel="stylesheet" href="../../styles.css" />
+    <style>
+      .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .entry-pane { display: grid; gap: 8px; }
+      .entry-view { border: 1px solid var(--border); border-radius: 8px; overflow: auto; max-height: 420px; background: #0f172a; }
+      .entry-row { display: grid; grid-template-columns: 40px 1fr; gap: 8px; padding: 6px 8px; border-bottom: 1px solid #162236; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; }
+      .entry-row:nth-child(even) { background: rgba(255,255,255,0.02); }
+      .entry-idx { color: var(--muted); text-align: right; }
+      .entry-val { white-space: pre; }
+      .combo-list { display: grid; gap: 8px; max-height: 420px; overflow: auto; }
+      .combo-item { border: 1px solid var(--border); border-radius: 8px; padding: 8px; display: grid; gap: 6px; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.0)); }
+      .combo-header { display: flex; align-items: center; gap: 8px; }
+      .combo-color { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.35); }
+      .chip { display: inline-flex; gap: 6px; align-items: center; border: 1px solid var(--border); border-radius: 999px; padding: 3px 8px; font-size: 12px; }
+      .muted { color: var(--muted); }
+      .controls .row { display: flex; gap: 12px; flex-wrap: wrap; }
+      .controls input[type="text"], .controls input[type="number"] { background: #0f172a; border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 6px 8px; }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <h1>Sum Combinations</h1>
+      <p>Paste a column of dollar amounts. Enter a target. See all combinations that sum to the target. Uses integer cents to avoid floating-point errors.</p>
+      <div class="hint"><a href="../../index.html" style="color: inherit;">← Back to tools</a></div>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <div class="panel-header"><h2>Input</h2></div>
+        <div class="layout">
+          <div class="entry-pane">
+            <textarea id="paste" placeholder="Paste numbers here (one per line). Examples: 12.34, $1,234.56, (5.00) for negative." rows="12"></textarea>
+            <div class="hint">After paste, click Parse. Entries are labeled from 0 in the view below.</div>
+            <div class="buttons">
+              <button id="parseBtn" type="button">Parse</button>
+              <button id="clearBtn" type="button">Clear</button>
+            </div>
+          </div>
+          <div>
+            <div class="controls option-group">
+              <label>Target amount</label>
+              <div class="row">
+                <input id="target" type="text" placeholder="e.g. 123.45" />
+                <label>Max combinations <input id="maxCombos" type="number" min="1" step="1" value="500" style="width: 80px;" /></label>
+                <button id="computeBtn" type="button">Compute</button>
+              </div>
+              <div class="hint">Large inputs can produce many combinations. Limit results to keep the page responsive.</div>
+            </div>
+            <div class="panel" style="margin-top: 10px;">
+              <div class="panel-header"><h2>Entries</h2></div>
+              <div id="entries" class="entry-view"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header"><h2>Combinations</h2></div>
+        <div id="combos" class="combo-list"></div>
+        <div id="status" class="hint" style="margin-top: 8px;"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="muted">Hover a combination to highlight matching entries above.</span>
+    </footer>
+
+    <script src="combos.js"></script>
+  </body>
+  </html>
+
+
