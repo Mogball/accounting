@@ -136,6 +136,7 @@
       const color = colorFor(i);
       const item = document.createElement('div');
       item.className = 'combo-item';
+      item.dataset.comboIndex = String(i);
       const header = document.createElement('div');
       header.className = 'combo-header';
       const dot = document.createElement('div');
@@ -159,7 +160,7 @@
       item.appendChild(chips);
       item.addEventListener('mouseenter', () => highlightCombo(combo, i, true));
       item.addEventListener('mouseleave', () => highlightCombo(combo, i, false));
-      item.addEventListener('click', () => displayComboOutput(combo));
+      item.addEventListener('click', () => displayComboOutput(combo, i));
       combosEl.appendChild(item);
     });
   }
@@ -179,7 +180,7 @@
     });
   }
 
-  function displayComboOutput(combo) {
+  function displayComboOutput(combo, comboIdx) {
     const items = combo.items.slice().sort((a, b) => a.index - b.index);
     const lines = ['index\tamount'];
     for (const e of items) {
@@ -188,6 +189,8 @@
     lines.push(`sum\t${formatPlainDollars(combo.sum)}`);
     comboOutputEl.value = lines.join('\n');
     comboOutputEl.scrollTop = 0;
+    comboOutputEl.focus();
+    statusEl.textContent = `Prepared output for Combo ${comboIdx + 1}.`;
   }
 
   function findCombinations(sourceEntries, targetCents, maxCount) {
