@@ -1,0 +1,105 @@
+:root {
+  --bg: #0b1220;
+  --panel: #121a2a;
+  --border: #24314b;
+  --text: #e6edf7;
+  --muted: #9fb0cf;
+  --primary: #3b82f6;
+  --primary-600: #2563eb;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(1200px 800px at 80% -10%, #1e293b, #0b1220 60%);
+  min-height: 100vh;
+}
+
+.header, .footer {
+  padding: 16px 20px;
+}
+.header h1 { margin: 0 0 4px 0; font-size: 20px; }
+.header p { margin: 0; color: var(--muted); }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 40px 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.0));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.panel h2 { margin: 0; font-size: 16px; }
+
+textarea {
+  width: 100%;
+  color: var(--text);
+  background: #0f172a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.hint { color: var(--muted); margin-top: 6px; font-size: 12px; }
+
+.buttons, .actions { display: flex; gap: 8px; align-items: center; }
+
+button {
+  background: var(--primary);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+button:hover { background: var(--primary-600); }
+
+.options {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.option-group { display: grid; gap: 6px; }
+.row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.row label { display: flex; gap: 6px; align-items: center; }
+
+.preview {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.preview table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.preview th, .preview td {
+  border-bottom: 1px solid #162236;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+.preview tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+.footer { color: var(--muted); font-size: 12px; }
+
+@media (min-width: 900px) {
+  .container { grid-template-columns: 1fr 1fr; }
+  .panel:nth-child(3), .panel:nth-child(4) { grid-column: span 2; }
+}
+
+

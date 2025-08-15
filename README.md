@@ -1,46 +1,41 @@
 # Accounting
-# Accounting Excel Add-in (Boilerplate)
+# Accounting Paste Tools (Static Web)
 
-Quick-start Excel Task Pane add-in using TypeScript and Webpack.
+Static website to convert pasted spreadsheet data (Excel/Sheets) into JSON or CSV. Designed for hosting on GitHub Pages.
 
-## Run (macOS)
+## Use it
 
-1) Install dependencies:
+1) Open the site (e.g., GitHub Pages at `https://<owner>.github.io/accounting/`).
+2) Copy cells in Excel/Sheets and paste into the input box.
+3) Choose output format (JSON arrays, JSON objects with header row, or CSV).
+4) Click Convert, then Copy or Download the result.
 
-```bash
-npm install
-```
-
-2) Install trusted HTTPS certs for `https://localhost:3000`:
-
-```bash
-npm run dev-certs
-```
-
-3) Start the dev server:
+## Local dev (optional)
 
 ```bash
-npm start
+npm run serve
 ```
+Open http://localhost:3000
 
-4) Sideload the add-in into Excel (Mac):
+## Deploy to GitHub Pages
 
-- Create the sideload folder if it doesn't exist:
-  `mkdir -p ~/Library/Containers/com.microsoft.Excel/Data/Documents/wef`
-- Copy the `manifest.xml` into that folder:
-  `cp -f manifest.xml ~/Library/Containers/com.microsoft.Excel/Data/Documents/wef/`
-- Open Excel → Insert → Add-ins → My Add-ins → Shared Folder → Accounting Excel Add-in.
-
-5) Click "Open Pane" on the Home tab ribbon. In the pane, click "Write to Selection".
-
-## Validate manifest
+Option A: gh-pages branch
 
 ```bash
-npm run validate
+git checkout -B gh-pages
+git rm -rf .
+cp -R ../accounting/* .  # or copy the built static files into this branch
+git add .
+git commit -m "Publish static site"
+git push -f origin gh-pages
 ```
+Then enable Pages in repo settings: Source → Deploy from a branch, Branch `gh-pages`, folder `/ (root)`.
 
-## Build production
+Option B: main branch /docs folder
 
-```bash
-npm run build
-```
+Place `index.html`, `styles.css`, `app.js` under `/docs`, then set Pages to serve from `main` and folder `/docs`.
+
+## Notes
+
+- Pasted data is parsed as tab-delimited (TSV) with support for quoted fields and newlines.
+- JSON objects mode uses the first row as headers; missing headers are auto-filled as `col_#`.
